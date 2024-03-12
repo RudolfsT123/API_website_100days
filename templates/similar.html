@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Art Gallery</title>
+    {% include 'header.html' %}
+  </head>
+  <body class="bg-light">
+    <div class="container">
+      <h3>Artists similar to {{ name }}</h3>
+      <h6>Click on Artists Name to See More Works of the Artist</h6>
+    </div>
+
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for artist in artists %}
+        <div class="col">
+          <div class="card">
+            <a
+              href="#"
+              data-toggle="modal"
+              data-target="#exampleModal{{ artist.id }}"
+            >
+              <img
+                src="{{ artist._links.image.href|replace('{image_version}', 'large') }}"
+                class="card-img-top img-responsive"
+                alt="{{ artist.name }}"
+              />
+            </a>
+            <div class="card-body">
+              <h5 class="card-title">
+                <a
+                  href="/artist?artist_id={{ artist.id }}"
+                  class="text-reset text-decoration-none"
+                  >{{ artist.name }}</a
+                >
+              </h5>
+            </div>
+          </div>
+        </div>
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="exampleModal{{ artist.id }}"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel{{ artist.id }}"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel{{ artist.id }}">
+                  <strong>{{ artist.name }}</strong>
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <img
+                  src="{{ artist._links.image.href|replace('{image_version}', 'large') }}"
+                  alt="{{ artist.name }}"
+                  class="img-responsive"
+                />
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% include 'footer.html' %}
+  </body>
+</html>

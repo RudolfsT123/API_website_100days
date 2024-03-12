@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{artist.name}}</title>
+    {% include 'header.html' %}
+  </head>
+  <body class="bg-light">
+    <div class="container-fluid">
+      <div class="container">
+        <h3>Art By {{artist.name}}</h3>
+        <p>
+          Birth: {{artist.birthday}} <br />
+          Death: {{artist.deathday}} <br />
+          Hometown: {{artist.hometown}} <br />
+          Nationality: {{artist.nationality}} <br />
+          <a
+            class="text-reset"
+            href="/similar?artist_id={{ artist.id }}&artist_name={{ artist.name }}"
+            >Similar Artists</a
+          >
+        </p>
+      </div>
+      <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          {% for artwork in artworks %}
+          <div class="col">
+            <div class="card">
+              <a
+                href="#"
+                data-toggle="modal"
+                data-target="#exampleModal{{ artwork.id }}"
+                ><img
+                  src="{{ artwork._links.image.href|replace('{image_version}', 'large') }}"
+                  class="card-img-top"
+                  alt="{{ artwork.title }}"
+              /></a>
+
+              <div class="card-body">
+                <a
+                  class="text-decoration-none link-dark"
+                  href="/similar_artworks?artwork_id = {{ artwork.id }}&artist_name={{ artist.name }}&artwork_name={{ artwork.title }}"
+                >
+                  <h5 class="card-title">{{ artwork.title }}</h5>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            id="exampleModal{{ artwork.id }}"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalCenterTitle">
+                    <strong>{{ artwork.title }} </strong>
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <img
+                    src="{{ artwork._links.image.href|replace('{image_version}',
+          'large') }}"
+                    alt="{{ artwork.title }}"
+                    class="img-responsive"
+                  />
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% include 'footer.html' %}
+  </body>
+</html>

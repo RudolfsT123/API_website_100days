@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: serif;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-body > .img-responsive {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
